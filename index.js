@@ -18,6 +18,15 @@ inquirer
             name: 'select',
         }
     ])
-    .then((answers) =>
+    .then((response) =>
         console.log('Success!')
-    );
+        switch (response) {
+            case "View all departments":
+                console.log("See table")
+                break;
+            case "View all roles":
+                console.log("View roles")
+                break;
+        }
+    )
+    
