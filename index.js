@@ -18,9 +18,8 @@ inquirer
             name: 'select',
         }
     ])
-    .then((response) =>
-        console.log('Success!')
-        switch (response) {
+    .then((response) => {
+        switch (answers) {
             case "View all departments":
                 console.log("See table")
                 break;
@@ -28,5 +27,5 @@ inquirer
                 console.log("View roles")
                 break;
         }
-    )
+       })
     
