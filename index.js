@@ -19,7 +19,7 @@ inquirer
         }
     ])
     .then((response) => {
-        switch (answers) {
+        switch (response) {
             case "View all departments":
                 console.log("See table")
                 break;
@@ -28,4 +28,4 @@ inquirer
                 break;
         }
        })
-    
+   
