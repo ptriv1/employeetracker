@@ -46,21 +46,13 @@ inquirer
         }
        })
 
-
-       con.connect(function(err) {
-        if (err) throw err;
-        con.query("SELECT name, address FROM customers", function (err, result, fields) {
-          if (err) throw err;
-          console.log(result);
-        });
-
 function viewDepartments() {
     console.log("View department");
     db.connect(function(err) {
         if (err) throw err;
-        db.query("SELECT name FROM departments", function (err, result, fields) {
+        db.query("SELECT name from department", function (err, result, fields) {
             if (err) throw err;
-            console.log(result);
+            console.table(result);
         });
     });
 }
@@ -86,5 +78,5 @@ function addEmployee() {
 }
 
 function updateEmployeeRole() {
-
+    console.log("role");
 }
