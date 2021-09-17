@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
+const cTable = require('console.table');
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -45,8 +46,23 @@ inquirer
         }
        })
 
+
+       con.connect(function(err) {
+        if (err) throw err;
+        con.query("SELECT name, address FROM customers", function (err, result, fields) {
+          if (err) throw err;
+          console.log(result);
+        });
+
 function viewDepartments() {
     console.log("View department");
+    db.connect(function(err) {
+        if (err) throw err;
+        db.query("SELECT name FROM departments", function (err, result, fields) {
+            if (err) throw err;
+            console.log(result);
+        });
+    });
 }
 
 function viewRoles() {
@@ -70,5 +86,5 @@ function addEmployee() {
 }
 
 function updateEmployeeRole() {
-    
+
 }
