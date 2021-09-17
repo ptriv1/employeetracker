@@ -19,7 +19,8 @@ inquirer
         }
     ])
     .then((response) => {
-        switch (response) {
+        console.log(response);
+        switch (response.select) {
             case "View all departments":
                 console.log("See table")
                 break;
