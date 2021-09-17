@@ -22,11 +22,53 @@ inquirer
         console.log(response);
         switch (response.select) {
             case "View all departments":
-                console.log("See table")
+                viewDepartments();
                 break;
             case "View all roles":
-                console.log("View roles")
+                viewRoles();
+                break;
+            case "View all employees":
+                viewEmployees();
+                break;
+            case "Add a department":
+                addDepartment();
+                break;
+            case "Add a role":
+                addRole();
+                break;
+            case "Add an employee":
+                addEmployee();
+                break;
+            case "Update an employee role":
+                updateEmployeeRole();
                 break;
         }
        })
-   
+
+function viewDepartments() {
+    console.log("View department");
+}
+
+function viewRoles() {
+    console.log("View roles");
+}
+
+function viewEmployees() {
+
+}
+
+function addDepartment() {
+
+}
+
+function addRole() {
+
+}
+
+function addEmployee() {
+
+}
+
+function updateEmployeeRole() {
+    
+}
