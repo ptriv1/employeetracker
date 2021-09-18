@@ -28,6 +28,10 @@ const db = mysql.createConnection({
 console.log('Connected!')
 );
 
+db.connect(function (err) {
+    if (err) throw err;
+  });
+
 inquirer
     .prompt([
         {
@@ -68,12 +72,9 @@ WHEN I choose to view all departments
 THEN I am presented with a formatted table showing department names and department ids
 */
 function viewDepartments() {
-    db.connect(function(err) {
+    db.query("SELECT id, name FROM department", function (err, result, fields) {
         if (err) throw err;
-        db.query("SELECT id, name FROM department", function (err, result, fields) {
-            if (err) throw err;
-            console.table(result);
-        });
+        console.table(result);
     });
 }
 
@@ -82,13 +83,9 @@ WHEN I choose to view all roles
 THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
 */
 function viewRoles() {
-    console.log("View roles");
-    db.connect(function(err) {
+    db.query("SELECT id, title, salary, department_id FROM role", function (err, result, fields) {
         if (err) throw err;
-        db.query("SELECT id, title, salary, department_id FROM role", function (err, result, fields) {
-            if (err) throw err;
-            console.table(result);
-        })
+        console.table(result);
     })
 }
 
@@ -116,7 +113,11 @@ function addDepartment() {
             }
         ])
         .then((response) => {
-            console.log(department);
+            console.log(response.department);
+            db.query("INSERT INTO department SET ?", {name: response.department}, function (err, result, fields) {
+                if (err) throw err;
+                console.table(result);
+            })
         })
 }
 
