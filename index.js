@@ -186,7 +186,7 @@ function addEmployee() {
         ])
         .then((response) => {
             console.log(response.department);
-            db.query("INSERT INTO employee SET ?", {name: response.department}, function (err, result, fields) {
+            db.query("INSERT INTO employee SET ?", {first_name: response.firstName, last_name: response.lastName, role_id: response.employeeRole, manager_id: response.employeeManager}, function (err, result, fields) {
                 if (err) throw err;
             })
         })
