@@ -102,7 +102,6 @@ function viewEmployees() {
     })
 }
 
-
 /*
 WHEN I choose to add a department
 THEN I am prompted to enter the name of the department and that department is added to the database
@@ -123,7 +122,6 @@ function addDepartment() {
             })
         })
 }
-
 
 /*
 WHEN I choose to add a role
@@ -155,7 +153,6 @@ function addRole() {
         })
 }
 
-
 /*
 WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
@@ -184,12 +181,13 @@ function addEmployee() {
                 name: 'employeeManager'
             }
         ])
+
         .then((response) => {
-            console.log(response.department);
             db.query("INSERT INTO employee SET ?", {first_name: response.firstName, last_name: response.lastName, role_id: response.employeeRole, manager_id: response.employeeManager}, function (err, result, fields) {
                 if (err) throw err;
             })
         })
+        
 }
 
 /*
