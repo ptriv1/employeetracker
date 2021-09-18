@@ -95,7 +95,9 @@ THEN I am presented with a formatted table showing employee data, including empl
 */
 
 function viewEmployees() {
-
+    db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id", function (err, result, fields) {
+        if (err) throw err;
+    })
 }
 
 
@@ -116,7 +118,6 @@ function addDepartment() {
             console.log(response.department);
             db.query("INSERT INTO department SET ?", {name: response.department}, function (err, result, fields) {
                 if (err) throw err;
-                console.table(result);
             })
         })
 }
@@ -127,7 +128,29 @@ WHEN I choose to add a role
 THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 */
 function addRole() {
-
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: 'Please enter the name of the role',
+                name: 'role'
+            },
+            {
+                type: 'input',
+                message: 'Please enter the salary of the role',
+                name: 'salary'
+            },
+            {
+                type: 'input',
+                message: 'Please enter the department of the role',
+                name: 'department'
+            }
+        ])
+        .then((response) => {
+            db.query("INSERT INTO role SET ?", {name: response.department}, function (err, result, fields) {
+                if (err) throw err;
+            })
+        })
 }
 
 
@@ -136,7 +159,35 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 */
 function addEmployee() {
-
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                message: 'Please enter the first name of the employee',
+                name:'firstName'
+            },
+            {
+                type: 'input',
+                message: 'Please enter the last name of the employee',
+                name: 'lastName'
+            },
+            {
+                type: 'input',
+                message: 'Please enter the role of the employee',
+                name: 'employeeRole'
+            },
+            {
+                type: 'input',
+                message: 'Please enter the name of the manager of the employee',
+                name: 'employeeManager'
+            }
+        ])
+        .then((response) => {
+            console.log(response.department);
+            db.query("INSERT INTO employee SET ?", {name: response.department}, function (err, result, fields) {
+                if (err) throw err;
+            })
+        })
 }
 
 /*
