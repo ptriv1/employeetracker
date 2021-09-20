@@ -167,7 +167,15 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 */
 function addEmployee() {
-    inquirer
+    db.query("SELECT * FROM role", function (err, result, fields) {
+        const roleChoices = result.map(roleRow => roleRow.name);
+        console.log(roleChoices);
+        console.log(result);
+        db.query("SELECT * FROM employee", function (err, result, fields) {
+            const employeeChoices = result.map(employeeRow => employeeRow.name);
+            console.log(employeeChoices);
+            console.log(result);
+            inquirer
         .prompt([
             {
                 type: 'input',
@@ -195,8 +203,9 @@ function addEmployee() {
             db.query("INSERT INTO employee SET ?", {first_name: response.firstName, last_name: response.lastName, role_id: response.employeeRole, manager_id: response.employeeManager}, function (err, result, fields) {
                 if (err) throw err;
             })
+        })  
         })
-        
+    }) 
 }
 
 /*
