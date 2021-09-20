@@ -131,7 +131,7 @@ THEN I am prompted to enter the name, salary, and department for the role and th
 
 function addRole() {
     db.query("SELECT * FROM department", function (err, result, fields) {
-        const choices = result.map(deptRow => deptRow.title);
+        const choices = result.map(deptRow => deptRow.name); 
         console.log(result);
         console.log(choices);
         inquirer
@@ -150,7 +150,7 @@ function addRole() {
                 type: 'list',
                 message: 'Please enter the department of the role',
                 name: 'department',
-                choices: result.choices            }
+                choices: choices            }
         ])
         .then((response) => {
             var department_id;
