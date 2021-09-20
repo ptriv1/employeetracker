@@ -127,8 +127,13 @@ function addDepartment() {
 WHEN I choose to add a role
 THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
 */
+
+
 function addRole() {
-    inquirer
+    db.query("Select * from depts", function(deptResults) {
+        const choices = deptResults.map(deptRow => deptRow.title);
+        console.log(choices);
+        inquirer
         .prompt([
             {
                 type: 'input',
@@ -152,7 +157,8 @@ function addRole() {
                 console.log(response.role);
                 if (err) throw err;
             })
-        })
+        }) 
+    }
 }
 
 var department_id = //get department_id as described above
