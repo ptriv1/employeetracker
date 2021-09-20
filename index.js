@@ -130,7 +130,7 @@ THEN I am prompted to enter the name, salary, and department for the role and th
 
 
 function addRole() {
-    db.query("Select * from depts", function(deptResults) {
+    db.query("SELECT * from department", function(deptResults) {
         const choices = deptResults.map(deptRow => deptRow.title);
         console.log(choices);
         inquirer
