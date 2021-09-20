@@ -171,10 +171,10 @@ function addEmployee() {
         const roleChoices = result.map(roleRow => roleRow.name);
         console.log(roleChoices);
         console.log(result);
-        db.query("SELECT * FROM employee", function (err, result, fields) {
-            const employeeChoices = result.map(employeeRow => employeeRow.name);
+        db.query("SELECT * FROM employee", function (error, employeeResult, fields) {
+            const employeeChoices = result.map(employeeRow => {name: employeeRow.name, value: employeeRow.id});
             console.log(employeeChoices);
-            console.log(result);
+            console.log(employeeResult);
             inquirer
         .prompt([
             {
@@ -188,14 +188,16 @@ function addEmployee() {
                 name: 'lastName'
             },
             {
-                type: 'input',
+                type: 'list',
                 message: 'Please enter the role of the employee',
-                name: 'employeeRole'
+                name: 'employeeRole',
+                choices: roleChoices
             },
             {
-                type: 'input',
+                type: 'list',
                 message: 'Please enter the ID of the manager',
-                name: 'employeeManager'
+                name: 'employeeManager',
+                choices: employeeChoices
             }
         ])
 
