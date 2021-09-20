@@ -168,11 +168,11 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 */
 function addEmployee() {
     db.query("SELECT * FROM role", function (err, result, fields) {
-        const roleChoices = result.map(roleRow => roleRow.name);
+        const roleChoices = result.map(roleRow => roleRow.title);
         console.log(roleChoices);
         console.log(result);
         db.query("SELECT * FROM employee", function (error, employeeResult, fields) {
-            const employeeChoices = result.map(employeeRow => ({name: employeeRow.name, value: employeeRow.id}));
+            const employeeChoices = employeeResult.map(employeeRow => ({firstName: employeeRow.first_name, lastName: employeeRow.last_name, value: employeeRow.id}));
             console.log(employeeChoices);
             console.log(employeeResult);
             inquirer
