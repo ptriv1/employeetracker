@@ -172,7 +172,7 @@ function addEmployee() {
         console.log(roleChoices);
         console.log(result);
         db.query("SELECT * FROM employee", function (error, employeeResult, fields) {
-            const employeeChoices = result.map(employeeRow => {name: employeeRow.name, value: employeeRow.id});
+            const employeeChoices = result.map(employeeRow => ({name: employeeRow.name, value: employeeRow.id}));
             console.log(employeeChoices);
             console.log(employeeResult);
             inquirer
