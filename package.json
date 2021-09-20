@@ -18,7 +18,7 @@
   "homepage": "https://github.com/ptriv1/employeetracker#readme",
   "dependencies": {
     "console.table": "^0.10.0",
-    "inquirer": "^8.1.4",
+    "inquirer": "^8.1.5",
     "mysql2": "^2.3.0"
   }
 }

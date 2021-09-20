@@ -75,7 +75,9 @@ function viewDepartments() {
     db.query("SELECT id, name FROM department", function (err, result, fields) {
         if (err) throw err;
         console.table(result);
+        selection();
     });
+    
 }
 
 /*
@@ -86,6 +88,7 @@ function viewRoles() {
     db.query("SELECT id, title, salary, department_id FROM role", function (err, result, fields) {
         if (err) throw err;
         console.table(result);
+        selection();
     })
 }
 
@@ -98,7 +101,8 @@ function viewEmployees() {
     console.log("view function running");
     db.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id", function (err, result, fields) {
         if (err) throw err;
-        console.table(result)
+        console.table(result);
+        selection();
     })
 }
 
@@ -119,6 +123,7 @@ function addDepartment() {
             console.log(response.department);
             db.query("INSERT INTO department SET ?", {name: response.department}, function (err, result, fields) {
                 if (err) throw err;
+                selection();
             })
         })
 }
@@ -157,6 +162,7 @@ function addRole() {
             db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: response.department}, function (err, result, fields) {
                 console.log(response.role);
                 if (err) throw err;
+                selection();
             })
         }) 
     })
@@ -205,6 +211,7 @@ function addEmployee() {
         .then((response) => {
             db.query("INSERT INTO employee SET ?", {first_name: response.firstName, last_name: response.lastName, role_id: response.employeeRole, manager_id: response.employeeManager}, function (err, result, fields) {
                 if (err) throw err;
+                selection();
             })
         }) 
         }) 
@@ -243,11 +250,46 @@ function updateEmployeeRole() {
                 db.query("INSERT INTO employee SET ?", {role_id: response.employeeRole, }, 
                 function (err, result, fields) {
                 if (err) throw err;
+                selection();
                 })
                 }) 
         })
-        
-    
     }) 
- 
+}
+
+function selection() {
+    inquirer
+    .prompt([
+        {
+            type: 'list', 
+            choices: ["View all departments", "View all roles", "View all employees", "Add a department", "Add a role", "Add an employee", "Update an employee role"], 
+            name: 'select',
+        }
+    ])
+    .then((response) => {
+        console.log(response);
+        switch (response.select) {
+            case "View all departments":
+                viewDepartments();
+                break;
+            case "View all roles":
+                viewRoles();
+                break;
+            case "View all employees":
+                viewEmployees();
+                break;
+            case "Add a department":
+                addDepartment();
+                break;
+            case "Add a role":
+                addRole();
+                break;
+            case "Add an employee":
+                addEmployee();
+                break;
+            case "Update an employee role":
+                updateEmployeeRole();
+                break;
+        }
+       })
 }
