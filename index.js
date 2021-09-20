@@ -159,13 +159,8 @@ function addRole() {
                 if (err) throw err;
             })
         }) 
-    }
-
-var department_id = //get department_id as described above
-
-db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: department_id}, function (err, result, fields) {
-                if (err) throw err;
-            })
+    })
+}
 
 /*
 WHEN I choose to add an employee
