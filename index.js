@@ -168,14 +168,14 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 */
 function addEmployee() {
     db.query("SELECT * FROM role", function (err, result, fields) {
-        const roleChoices = result.map(roleRow => roleRow.title);
+        const roleChoices = result.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
         console.log(roleChoices);
         console.log(result);
         db.query("SELECT * FROM employee", function (error, employeeResult, fields) {
-            const employeeChoices = employeeResult.map(employeeRow => ({firstName: employeeRow.first_name, lastName: employeeRow.last_name, value: employeeRow.id}));
+            const employeeChoices = employeeResult.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name, value: employeeRow.id}));
             console.log(employeeChoices);
             console.log(employeeResult);
-            inquirer
+        inquirer
         .prompt([
             {
                 type: 'input',
@@ -205,8 +205,8 @@ function addEmployee() {
             db.query("INSERT INTO employee SET ?", {first_name: response.firstName, last_name: response.lastName, role_id: response.employeeRole, manager_id: response.employeeManager}, function (err, result, fields) {
                 if (err) throw err;
             })
-        })  
-        })
+        }) 
+        }) 
     }) 
 }
 
