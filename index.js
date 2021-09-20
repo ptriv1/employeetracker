@@ -132,7 +132,7 @@ function addRole() {
         .prompt([
             {
                 type: 'input',
-                message: 'Please enter the name of the role',
+                message: 'Please enter the title of the role',
                 name: 'role'
             },
             {
@@ -147,11 +147,19 @@ function addRole() {
             }
         ])
         .then((response) => {
-            db.query("INSERT INTO role SET ?", {name: response.department}, function (err, result, fields) {
+            var department_id;
+            db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: department_id}, function (err, result, fields) {
+                console.log(response.role);
                 if (err) throw err;
             })
         })
 }
+
+var department_id = //get department_id as described above
+
+db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: department_id}, function (err, result, fields) {
+                if (err) throw err;
+            })
 
 /*
 WHEN I choose to add an employee
