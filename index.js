@@ -150,8 +150,7 @@ function addRole() {
                 type: 'list',
                 message: 'Please enter the department of the role',
                 name: 'department',
-                choices: choices
-            }
+                choices: result.choices            }
         ])
         .then((response) => {
             var department_id;
