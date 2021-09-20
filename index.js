@@ -146,9 +146,10 @@ function addRole() {
                 name: 'salary'
             },
             {
-                type: 'input',
+                type: 'list',
                 message: 'Please enter the department of the role',
-                name: 'department'
+                name: 'department',
+                choices: choices
             }
         ])
         .then((response) => {
@@ -159,7 +160,6 @@ function addRole() {
             })
         }) 
     }
-}
 
 var department_id = //get department_id as described above
 
