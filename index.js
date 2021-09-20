@@ -1,20 +1,3 @@
-/* 
-WHEN I choose to view all departments
-THEN I am presented with a formatted table showing department names and department ids
-WHEN I choose to view all roles
-THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role
-WHEN I choose to view all employees
-THEN I am presented with a formatted table showing employee data, including employee ids, first names, last names, job titles, departments, salaries, and managers that the employees report to
-WHEN I choose to add a department
-THEN I am prompted to enter the name of the department and that department is added to the database
-WHEN I choose to add a role
-THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database
-WHEN I choose to add an employee
-THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
-WHEN I choose to update an employee role
-THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
-*/
-
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 const cTable = require('console.table');
@@ -137,8 +120,6 @@ THEN I am prompted to enter the name, salary, and department for the role and th
 function addRole() {
     db.query("SELECT * FROM department", function (err, result, fields) {
         const choices = result.map(deptRow => ({name: deptRow.name, value: deptRow.id}));
-        console.log(result);
-        console.log(choices);
         inquirer
         .prompt([
             {
@@ -160,7 +141,6 @@ function addRole() {
         ])
         .then((response) => {
             db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: response.department}, function (err, result, fields) {
-                console.log(response.role);
                 if (err) throw err;
                 selection();
             })
@@ -175,13 +155,9 @@ THEN I am prompted to enter the employee’s first name, last name, role, and ma
 function addEmployee() {
     db.query("SELECT * FROM role", function (err, result, fields) {
         const roleChoices = result.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
-        console.log(roleChoices);
-        console.log(result);
         db.query("SELECT * FROM employee", function (error, employeeResult, fields) {
             const employeeChoices = employeeResult.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name, value: employeeRow.id}));
             employeeChoices.push({name: "none", value: null});
-            console.log(employeeChoices);
-            console.log(employeeResult);
         inquirer
         .prompt([
             {
@@ -225,11 +201,8 @@ THEN I am prompted to select an employee to update and their new role and this i
 function updateEmployeeRole() {
     db.query("SELECT * FROM employee", function (err, result, fields) {
             const employeeChoices = result.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name}));
-            console.log(employeeChoices);
             db.query("SELECT * FROM role", function (error, roleResult, fields) {
-                const roleChoices = result.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
-                console.log(roleChoices);
-                console.log(roleResult);
+                const roleChoices = roleResult.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
                 inquirer
                 .prompt([
                     {
@@ -267,7 +240,6 @@ function selection() {
         }
     ])
     .then((response) => {
-        console.log(response);
         switch (response.select) {
             case "View all departments":
                 viewDepartments();
