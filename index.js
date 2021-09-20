@@ -217,13 +217,12 @@ THEN I am prompted to select an employee to update and their new role and this i
 */
 function updateEmployeeRole() {
     db.query("SELECT * FROM employee", function (err, result, fields) {
-            const employeeChoices = employeeResult.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name}));
+            const employeeChoices = result.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name}));
             console.log(employeeChoices);
-            console.log(employeeResult);
-            db.query("SELECT * FROM role", function (err, result, fields) {
+            db.query("SELECT * FROM role", function (error, roleResult, fields) {
                 const roleChoices = result.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
                 console.log(roleChoices);
-                console.log(result);
+                console.log(roleResult);
                 inquirer
                 .prompt([
                     {
