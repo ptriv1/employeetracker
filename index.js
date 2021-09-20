@@ -154,8 +154,7 @@ function addRole() {
             }
         ])
         .then((response) => {
-            var department_id;
-            db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: response.department_id}, function (err, result, fields) {
+            db.query("INSERT INTO role SET ?", {title: response.role, salary: response.salary, department_id: response.department}, function (err, result, fields) {
                 console.log(response.role);
                 if (err) throw err;
             })
@@ -217,5 +216,39 @@ WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
 */
 function updateEmployeeRole() {
+    db.query("SELECT * FROM employee", function (err, result, fields) {
+            const employeeChoices = employeeResult.map(employeeRow => ({name: employeeRow.first_name + " " + employeeRow.last_name}));
+            console.log(employeeChoices);
+            console.log(employeeResult);
+            db.query("SELECT * FROM role", function (err, result, fields) {
+                const roleChoices = result.map(roleRow => ({name: roleRow.title, value: roleRow.id}));
+                console.log(roleChoices);
+                console.log(result);
+                inquirer
+                .prompt([
+                    {
+                    type: 'list',
+                    message: 'Please choose an employee to update',
+                    name: 'updatedEmployee',
+                    choices: employeeChoices
+                    },
+                    {
+                    type: 'list',
+                    message: 'Please choose a role',
+                    name: 'updatedRole',
+                    choices: roleChoices
+                    }
+                    ])
+
+                .then((response) => {
+                db.query("INSERT INTO employee SET ?", {role_id: response.employeeRole, }, 
+                function (err, result, fields) {
+                if (err) throw err;
+                })
+                }) 
+        })
+        
     
+    }) 
+ 
 }
